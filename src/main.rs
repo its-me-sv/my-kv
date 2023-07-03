@@ -3,11 +3,12 @@ use server::utils::{
     server::{handle_connections, spawn_server},
 };
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let address = "127.0.0.1:8080";
-    let server = spawn_server(address);
+    let server = spawn_server(address).await;
 
     println!("{}", log(Log::ServerBinded(server.local_addr().unwrap())));
 
-    handle_connections(server);
+    handle_connections(server).await;
 }
