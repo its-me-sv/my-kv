@@ -12,10 +12,12 @@ pub async fn spawn_server(address: &str) -> TcpListener {
 pub async fn handle_connections(server: TcpListener) {
     loop {
         match server.accept().await {
-            Ok((client, addr)) => {
+            Ok((client, addr)) => tokio::spawn(async move {
                 println!("{}", log(Log::ClientConnected(addr)));
                 handle_client(client).await;
-            }
+            })
+            .await
+            .unwrap(),
             Err(e) => eprintln!("{}", log(Log::UnableToAcceptClient(e.to_string()))),
         }
     }
