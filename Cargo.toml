@@ -9,4 +9,3 @@ path = "src/lib/mod.rs"
 
 [dependencies]
 chrono = "0.4.26"
-tokio = { version = "1.29.1", features = ["full"] }
